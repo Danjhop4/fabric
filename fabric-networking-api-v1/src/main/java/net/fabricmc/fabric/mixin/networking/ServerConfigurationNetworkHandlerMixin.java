@@ -31,6 +31,7 @@ import net.minecraft.network.ClientConnection;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.common.DisconnectS2CPacket;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ConnectedClientData;
 import net.minecraft.server.network.ServerCommonNetworkHandler;
 import net.minecraft.server.network.ServerConfigurationNetworkHandler;
 import net.minecraft.server.network.ServerPlayerConfigurationTask;
@@ -70,8 +71,8 @@ public abstract class ServerConfigurationNetworkHandlerMixin extends ServerCommo
 	@Unique
 	private boolean earlyTaskExecution;
 
-	public ServerConfigurationNetworkHandlerMixin(MinecraftServer server, ClientConnection connection, int keepAliveId) {
-		super(server, connection, keepAliveId);
+	public ServerConfigurationNetworkHandlerMixin(MinecraftServer server, ClientConnection connection, ConnectedClientData arg) {
+		super(server, connection, arg);
 	}
 
 	@Inject(method = "<init>", at = @At("RETURN"))

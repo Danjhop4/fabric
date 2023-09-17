@@ -24,7 +24,7 @@ import net.minecraft.network.NetworkState;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.PacketCallbacks;
 import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.common.PlayPingS2CPacket;
+import net.minecraft.network.packet.s2c.common.CommonPingS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerConfigurationNetworkHandler;
 import net.minecraft.util.Identifier;
@@ -39,7 +39,6 @@ import net.fabricmc.fabric.impl.networking.ChannelInfoHolder;
 import net.fabricmc.fabric.impl.networking.NetworkingImpl;
 import net.fabricmc.fabric.impl.networking.payload.PacketByteBufPayload;
 import net.fabricmc.fabric.mixin.networking.accessor.ServerCommonNetworkHandlerAccessor;
-import net.fabricmc.fabric.mixin.networking.accessor.ServerLoginNetworkHandlerAccessor;
 
 public final class ServerConfigurationNetworkAddon extends AbstractChanneledNetworkAddon<ServerConfigurationNetworking.ConfigurationChannelHandler> {
 	private final ServerConfigurationNetworkHandler handler;
@@ -77,7 +76,7 @@ public final class ServerConfigurationNetworkAddon extends AbstractChanneledNetw
 		if (this.registerState == RegisterState.NOT_SENT) {
 			// Send the registration packet, followed by a ping
 			this.sendInitialChannelRegistrationPacket();
-			this.sendPacket(new PlayPingS2CPacket(0xFAB71C));
+			this.sendPacket(new CommonPingS2CPacket(0xFAB71C));
 
 			this.registerState = RegisterState.SENT;
 
@@ -199,6 +198,6 @@ public final class ServerConfigurationNetworkAddon extends AbstractChanneledNetw
 	}
 
 	public ChannelInfoHolder getChannelInfoHolder() {
-		return (ChannelInfoHolder) ((ServerLoginNetworkHandlerAccessor) handler).getConnection();
+		return (ChannelInfoHolder) ((ServerCommonNetworkHandlerAccessor) handler).getConnection();
 	}
 }
